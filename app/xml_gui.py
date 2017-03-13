@@ -1,6 +1,7 @@
 from PyQt4 import QtGui, QtCore
 from read_xml import Xml_Parser
 from functools import partial
+import random
 import read_xml
 # from StyleSet import stylish
 
@@ -9,11 +10,9 @@ import read_xml
 class Column_Window(QtGui.QWidget):
 	def __init__(self, val=None):
 		QtGui.QWidget.__init__(self)
-		# stylish(self)
-
-		# check_API(self.id, self.sheet, self.user, self.passwrd)
 		self.val = val
 		self.vbox = QtGui.QHBoxLayout()
+		self.gbox = QtGui.QGridLayout()
 		self.mygroupbox = QtGui.QGroupBox()
 		myform = QtGui.QFormLayout()
 		self.font = QtGui.QFont()
@@ -21,47 +20,13 @@ class Column_Window(QtGui.QWidget):
 
 		self.font.setPointSize(12)
 		self.font.setBold(True)
-		self.font.setWeight(50)
-
-# 		dic = {'a':'111', 'b':'222', 'c':'333'}
-#
-# def create_connect(x):
-#     return lambda: doit(x)
-#
-# for key in dic:
-#     btn = QPushButton(key, self)
-#     btn.clicked.connect(create_connect(dic[key]))
+		self.font.setWeight(90)
 		for index, vals in self.val.iteritems():
-			# print index, vals
-			# self.btn_no = str(index).replace(" ", "_")
-		# TextField are generated dynamically
-			button=QtGui.QPushButton(index, self)
-			button.setFixedWidth(100)
-			# exec('self.button_'+str(self.btn_no)+'.setText("'+ str(index) +'")')
-			# exec('self.button_'+str(self.btn_no)+'.setPalette(palette)')
-			# exec('self.button_'+str(self.btn_no)+'.setFont(self.font)')
-			button.clicked.connect(partial(self.post_json, vals))
-			self.vbox.addWidget(button)
-
-
-
-
-			# ButtonBox = QtGui.QGroupBox()
-			# ButtonsLayout = QtGui.QHBoxLayout()
-			#
-			# Button_01 = QtGui.QPushButton("Post")
-			# Button_01.clicked.connect(self.post_json)
-			#
-			# Button_02 = QtGui.QPushButton("Recover")
-			# # Button_02.clicked.connect(self.backup_button)
-
-
-			# ButtonsLayout.addWidget(Button_01)
-			# ButtonsLayout.addWidget(Button_02)
-			#
-			#
-			# ButtonBox.setLayout(ButtonsLayout)
-
+		# Buttons are generated dynamically
+			self.button=QtGui.QPushButton(index, self)
+			self.button.setFixedWidth(100)
+			self.button.clicked.connect(partial(self.get_values, vals))
+			self.vbox.addWidget(self.button)
 
 			scroll = QtGui.QScrollArea()
 			scroll.setWidget(self.mygroupbox)
@@ -69,21 +34,19 @@ class Column_Window(QtGui.QWidget):
 			scroll.setFixedHeight(800)
 			layout = QtGui.QVBoxLayout()
 			layout.addWidget(scroll)
-			# layout.addWidget(ButtonBox)
-			self.setGeometry(500, 100, 800, 400)
-			self.setLayout(self.vbox)
-			self.show()
+
+		# spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+		# self.vbox.addItem(spacerItem, 1, 1, 1, 1)
+		self.gbox.addLayout(self.vbox, 0, 6)
+		self.setGeometry(500, 100, 800, 400)
+		self.setLayout(self.vbox)
+		self.show()
 
 
 
-	def doit(self, text):
+
+	def get_values(self, text):
 		print "%s" % text
-	def post_json(self, x):
-
-		print x
-		# 	if key == eval( 'self.button_'+str(self.btn_no)+'.text()' ):
-		# 		print value
-		# replace(lst)
 
 
 	def center(self):
@@ -102,7 +65,5 @@ if __name__ == '__main__':
 	path = os.path.join(BASE_DIR, 'config')
 	xmlfile = Xml_Parser()
 	y = xmlfile.get_file(path)
-	# xy = xmlfile.grab_xml_data()
-	# print xy
 	window = Column_Window(y)
 	sys.exit(app.exec_())
