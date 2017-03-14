@@ -10,7 +10,7 @@ import read_xml
 class Column_Window(QtGui.QWidget):
 	def __init__(self, val=None):
 		QtGui.QWidget.__init__(self)
-		self.val = val
+
 		self.vbox = QtGui.QHBoxLayout()
 		self.gbox = QtGui.QGridLayout()
 		self.mygroupbox = QtGui.QGroupBox()
@@ -21,12 +21,21 @@ class Column_Window(QtGui.QWidget):
 		self.font.setPointSize(12)
 		self.font.setBold(True)
 		self.font.setWeight(90)
-		for index, vals in self.val.iteritems():
+		for index, vals in val.iterrows():
 		# Buttons are generated dynamically
 			self.button=QtGui.QPushButton(index, self)
 			self.button.setFixedWidth(100)
 			self.button.clicked.connect(partial(self.get_values, vals))
 			self.vbox.addWidget(self.button)
+
+		# for valx in self.valx:
+		# 	# Buttons are generated dynamically
+		# 	self.button=QtGui.QPushButton(valx, self)
+		# 	self.button.setFixedWidth(100)
+		# 	self.vbox.addWidget(self.button)
+		# 	for valy in self.valy:
+		# 		self.button.clicked.connect(partial(self.get_values, valy))
+
 
 			scroll = QtGui.QScrollArea()
 			scroll.setWidget(self.mygroupbox)
@@ -37,7 +46,7 @@ class Column_Window(QtGui.QWidget):
 
 		# spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
 		# self.vbox.addItem(spacerItem, 1, 1, 1, 1)
-		self.gbox.addLayout(self.vbox, 0, 6)
+		# self.gbox.addLayout(self.vbox, 0, 6)
 		self.setGeometry(500, 100, 800, 400)
 		self.setLayout(self.vbox)
 		self.show()
@@ -46,7 +55,8 @@ class Column_Window(QtGui.QWidget):
 
 
 	def get_values(self, text):
-		print "%s" % text
+		for i in text:
+			print "%s" % i
 
 
 	def center(self):
