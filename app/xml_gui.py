@@ -1,10 +1,7 @@
 from PyQt4 import QtGui, QtCore
 from read_xml import Xml_Parser
 from functools import partial
-import random
-import read_xml
 # from StyleSet import stylish
-
 
 
 class Column_Window(QtGui.QWidget):
@@ -27,15 +24,6 @@ class Column_Window(QtGui.QWidget):
 			self.button.setFixedWidth(100)
 			self.button.clicked.connect(partial(self.get_values, vals))
 			self.vbox.addWidget(self.button)
-
-		# for valx in self.valx:
-		# 	# Buttons are generated dynamically
-		# 	self.button=QtGui.QPushButton(valx, self)
-		# 	self.button.setFixedWidth(100)
-		# 	self.vbox.addWidget(self.button)
-		# 	for valy in self.valy:
-		# 		self.button.clicked.connect(partial(self.get_values, valy))
-
 
 			scroll = QtGui.QScrollArea()
 			scroll.setWidget(self.mygroupbox)
